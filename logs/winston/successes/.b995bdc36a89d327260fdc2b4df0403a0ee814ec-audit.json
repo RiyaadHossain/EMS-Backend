@@ -1,0 +1,80 @@
+{
+    "keep": {
+        "days": true,
+        "amount": 14
+    },
+    "auditLog": "/home/riyad/Documents/Projects/Employee Management System/Backend/logs/winston/successes/.b995bdc36a89d327260fdc2b4df0403a0ee814ec-audit.json",
+    "files": [
+        {
+            "date": 1733634778979,
+            "name": "/home/riyad/Documents/Projects/Employee Management System/Backend/logs/winston/successes/phu-2024-08-12-11-success.log",
+            "hash": "4a2ae3d6c1e69d64d309f1886915d4d45742b5c1058998a84e255edd9ce5399f"
+        },
+        {
+            "date": 1733638122889,
+            "name": "/home/riyad/Documents/Projects/Employee Management System/Backend/logs/winston/successes/phu-2024-08-12-12-success.log",
+            "hash": "b33d4b9a96b7eb482e8bf109cfd6c31c5a44ec8ea9e8ca8220340a05a077174a"
+        },
+        {
+            "date": 1733641659879,
+            "name": "/home/riyad/Documents/Projects/Employee Management System/Backend/logs/winston/successes/phu-2024-08-12-13-success.log",
+            "hash": "3ec1ba9c1782e3e4551501bed9db6c4923d5c80dc4064307def676b0f4fbcab5"
+        },
+        {
+            "date": 1733647830207,
+            "name": "/home/riyad/Documents/Projects/Employee Management System/Backend/logs/winston/successes/phu-2024-08-12-14-success.log",
+            "hash": "cdeebd58462ab560c993e39d902ce052ee44eca56e00c7853b637e03967cae8b"
+        },
+        {
+            "date": 1733648434570,
+            "name": "/home/riyad/Documents/Projects/Employee Management System/Backend/logs/winston/successes/phu-2024-08-12-15-success.log",
+            "hash": "297658ef1c34d56e5c1ba46d722bd7180b11c8964dbd7119813601a6bf646617"
+        },
+        {
+            "date": 1733715050612,
+            "name": "/home/riyad/Documents/Projects/Employee Management System/Backend/logs/winston/successes/phu-2024-09-12-09-success.log",
+            "hash": "2c8ff4ec590578a07660e1430b2fab4a29a04b45936bac8b39b1a9e395d45cf8"
+        },
+        {
+            "date": 1733720681099,
+            "name": "/home/riyad/Documents/Projects/Employee Management System/Backend/logs/winston/successes/phu-2024-09-12-11-success.log",
+            "hash": "77ad252bad0e57e2cb3ee492bfd20d3e917935a7958df513ad74fe23976652dd"
+        },
+        {
+            "date": 1733724055694,
+            "name": "/home/riyad/Documents/Projects/Employee Management System/Backend/logs/winston/successes/phu-2024-09-12-12-success.log",
+            "hash": "d220278d1c79c510b7753c1d4e9d45ff9e88dacde6e796c615fa55aa886e9676"
+        },
+        {
+            "date": 1733728007377,
+            "name": "/home/riyad/Documents/Projects/Employee Management System/Backend/logs/winston/successes/phu-2024-09-12-13-success.log",
+            "hash": "20b8ff110d11a7a7e20be2c31d703ac80ddfb76afa2846cbd31c7c9144eb8e0f"
+        },
+        {
+            "date": 1733733301999,
+            "name": "/home/riyad/Documents/Projects/Employee Management System/Backend/logs/winston/successes/phu-2024-09-12-14-success.log",
+            "hash": "ef4e6265c6b05bb8f50f2380e9382fc48c50b81b2c1e97369d25e4e4e270dcbc"
+        },
+        {
+            "date": 1733735545527,
+            "name": "/home/riyad/Documents/Projects/Employee Management System/Backend/logs/winston/successes/phu-2024-09-12-15-success.log",
+            "hash": "9d1f74e34fc9b42b5aec0d5f1ca0201219b4e858779be688b4ab5c1ec33b5c23"
+        },
+        {
+            "date": 1733794923826,
+            "name": "/home/riyad/Documents/Projects/Employee Management System/Backend/logs/winston/successes/phu-2024-10-12-07-success.log",
+            "hash": "a46f076b16abd122ab98c8c1457fe3a9a465f357c2f5e6b5ccc63ff85c92315e"
+        },
+        {
+            "date": 1733796003180,
+            "name": "/home/riyad/Documents/Projects/Employee Management System/Backend/logs/winston/successes/phu-2024-10-12-08-success.log",
+            "hash": "c72420ed795707657823de496046147b1dcfb24e39ca628f8adab4083608d7ae"
+        },
+        {
+            "date": 1733799710634,
+            "name": "/home/riyad/Documents/Projects/Employee Management System/Backend/logs/winston/successes/phu-2024-10-12-09-success.log",
+            "hash": "bc01183c758735745b80436b7f9c0ec3ae8e9dfa8172f805420ca113c82f196b"
+        }
+    ],
+    "hashType": "sha256"
+}

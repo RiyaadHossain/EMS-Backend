@@ -1,0 +1,2 @@
+Tue Dec 10 2024 7:42:26 } [PH] error: 🐱‍🏍 globalErrorHandler ~~ E11000 duplicate key error collection: Employee-Management-System.users index: userId_1 dup key: { userId: "E-00007" }
+Tue Dec 10 2024 7:43:47 } [PH] error: 🐱‍🏍 globalErrorHandler ~~ E11000 duplicate key error collection: Employee-Management-System.users index: userId_1 dup key: { userId: "E-00007" }

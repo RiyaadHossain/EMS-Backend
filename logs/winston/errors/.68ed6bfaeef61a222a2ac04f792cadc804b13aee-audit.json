@@ -1,0 +1,80 @@
+{
+    "keep": {
+        "days": true,
+        "amount": 14
+    },
+    "auditLog": "/home/riyad/Documents/Projects/Employee Management System/Backend/logs/winston/errors/.68ed6bfaeef61a222a2ac04f792cadc804b13aee-audit.json",
+    "files": [
+        {
+            "date": 1733634778982,
+            "name": "/home/riyad/Documents/Projects/Employee Management System/Backend/logs/winston/errors/phu-2024-08-12-11-error.log",
+            "hash": "a8dd68274af58852eb032115ae95f631de7476f034f710243a4184149b043dd9"
+        },
+        {
+            "date": 1733638122892,
+            "name": "/home/riyad/Documents/Projects/Employee Management System/Backend/logs/winston/errors/phu-2024-08-12-12-error.log",
+            "hash": "10a9ac9d4a3ee5839050bf83448c004a29dc224fa5d84a59faad494aa04111d2"
+        },
+        {
+            "date": 1733641659882,
+            "name": "/home/riyad/Documents/Projects/Employee Management System/Backend/logs/winston/errors/phu-2024-08-12-13-error.log",
+            "hash": "6caba94260588fc8eb7067c4930eec846b540a3e935e751e81cfa2c001a35afa"
+        },
+        {
+            "date": 1733647830211,
+            "name": "/home/riyad/Documents/Projects/Employee Management System/Backend/logs/winston/errors/phu-2024-08-12-14-error.log",
+            "hash": "58eeac1139fc49f65b29c284ca6232fe8a83d56fdaf4e46f1935fcf5d984d7eb"
+        },
+        {
+            "date": 1733648434573,
+            "name": "/home/riyad/Documents/Projects/Employee Management System/Backend/logs/winston/errors/phu-2024-08-12-15-error.log",
+            "hash": "3ed14636fcefaeca1ed3562f7d7801e8490dc94540aa0b42f5cbc7078360dc11"
+        },
+        {
+            "date": 1733715050615,
+            "name": "/home/riyad/Documents/Projects/Employee Management System/Backend/logs/winston/errors/phu-2024-09-12-09-error.log",
+            "hash": "4932e7ba0b8bdb8b36362ebef9d0b399b65cf04bf937f7b8551ae45f8936b6e9"
+        },
+        {
+            "date": 1733720681103,
+            "name": "/home/riyad/Documents/Projects/Employee Management System/Backend/logs/winston/errors/phu-2024-09-12-11-error.log",
+            "hash": "8c7105d79989c55042092be5df3b32fd7307ac655ad75f8f62debc6440c92f63"
+        },
+        {
+            "date": 1733724055698,
+            "name": "/home/riyad/Documents/Projects/Employee Management System/Backend/logs/winston/errors/phu-2024-09-12-12-error.log",
+            "hash": "4c84ee177534e1477b9429286b2c90b6f62da056538e43e836428a22e971c8d6"
+        },
+        {
+            "date": 1733727968799,
+            "name": "/home/riyad/Documents/Projects/Employee Management System/Backend/logs/winston/errors/phu-2024-09-12-13-error.log",
+            "hash": "25e82d4ea141ac7566a03d27382c207177011a0abe209b480bf86cafb1903bec"
+        },
+        {
+            "date": 1733733302003,
+            "name": "/home/riyad/Documents/Projects/Employee Management System/Backend/logs/winston/errors/phu-2024-09-12-14-error.log",
+            "hash": "3442765a309fe001700b21e58e1b00ba8c372e1ce44123c36c42224bf44706e0"
+        },
+        {
+            "date": 1733735545533,
+            "name": "/home/riyad/Documents/Projects/Employee Management System/Backend/logs/winston/errors/phu-2024-09-12-15-error.log",
+            "hash": "d4927017ce91d75baca017b1b9488ee17d3c1cf033c374d149f71524ce9b25b8"
+        },
+        {
+            "date": 1733794923832,
+            "name": "/home/riyad/Documents/Projects/Employee Management System/Backend/logs/winston/errors/phu-2024-10-12-07-error.log",
+            "hash": "49df71b84b3f641fa5a256fd92b19f3b7dd2014cb67ffebe2f3657136562d08c"
+        },
+        {
+            "date": 1733796003183,
+            "name": "/home/riyad/Documents/Projects/Employee Management System/Backend/logs/winston/errors/phu-2024-10-12-08-error.log",
+            "hash": "e500e6f65257960f088b447486b978fc117115f90d16232b88e90f98199aa131"
+        },
+        {
+            "date": 1733799639443,
+            "name": "/home/riyad/Documents/Projects/Employee Management System/Backend/logs/winston/errors/phu-2024-10-12-09-error.log",
+            "hash": "d42b95133c091622d9fb3dbaf5b063c25794028e7a2130c282eeb8dcf683134e"
+        }
+    ],
+    "hashType": "sha256"
+}
