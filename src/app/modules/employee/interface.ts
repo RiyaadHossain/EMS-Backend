@@ -4,6 +4,7 @@ import { ENUM_DESIGNATION } from '@/enums/designation';
 import { Model, Types } from 'mongoose';
 
 export type IEmployee = {
+  _id?: Types.ObjectId
   user: Types.ObjectId
   department: Types.ObjectId
   designation: ENUM_DESIGNATION

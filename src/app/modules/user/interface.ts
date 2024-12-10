@@ -3,6 +3,7 @@
 import { Model, Types } from 'mongoose';
 import { ENUM_USER_ROLE } from '@/enums/user';
 import { IEmployee } from '../employee/interface';
+import { IManager } from '../manager/interface';
 
 export type IUser = {
   userId: string;
@@ -21,7 +22,7 @@ export interface UserModel extends Model<IUser> {
   getRoleSpecificDetails(
     id: string
   ): Promise<
-    | (IEmployee & { _id: Types.ObjectId })
+    | (IEmployee & { _id: Types.ObjectId, employee: IEmployee, manager: IManager })
     | null
   >;
 }

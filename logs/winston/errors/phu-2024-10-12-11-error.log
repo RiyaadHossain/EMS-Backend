@@ -1,0 +1,53 @@
+Tue Dec 10 2024 11:29:59 } [PH] error: 🐱‍🏍 globalErrorHandler ~~ You are not authorized
+Tue Dec 10 2024 11:32:8 } [PH] error: 🐱‍🏍 globalErrorHandler ~~ [
+  {
+    "code": "invalid_type",
+    "expected": "string",
+    "received": "undefined",
+    "path": [
+      "body",
+      "name"
+    ],
+    "message": "Name is required"
+  },
+  {
+    "code": "invalid_type",
+    "expected": "string",
+    "received": "undefined",
+    "path": [
+      "body",
+      "department"
+    ],
+    "message": "Department is required"
+  },
+  {
+    "code": "invalid_type",
+    "expected": "string",
+    "received": "undefined",
+    "path": [
+      "body",
+      "issueDate"
+    ],
+    "message": "Issue Date is required"
+  },
+  {
+    "code": "invalid_type",
+    "expected": "string",
+    "received": "undefined",
+    "path": [
+      "body",
+      "expectedEndDate"
+    ],
+    "message": "Expected End Date is required"
+  }
+]
+Tue Dec 10 2024 11:34:50 } [PH] error: 🐱‍🏍 globalErrorHandler ~~ Cast to ObjectId failed for value "" (type string) at path "_id" for model "Department"
+Tue Dec 10 2024 11:37:1 } [PH] error: 🐱‍🏍 globalErrorHandler ~~ Manager is not assigned to HR department doesn't exist!
+Tue Dec 10 2024 11:40:54 } [PH] error: 🐱‍🏍 globalErrorHandler ~~ Cannot populate path `department.employee` because it is not in your schema. Set the `strictPopulate` option to false to override.
+Tue Dec 10 2024 11:41:22 } [PH] error: 🐱‍🏍 globalErrorHandler ~~ utils.populate: invalid path. Expected string. Got typeof `object`
+Tue Dec 10 2024 11:44:4 } [PH] error: 🐱‍🏍 globalErrorHandler ~~ You only can edit name or end date
+Tue Dec 10 2024 11:44:27 } [PH] error: 🐱‍🏍 globalErrorHandler ~~ Cast to ObjectId failed for value ":id" (type string) at path "_id" for model "Project"
+Tue Dec 10 2024 11:45:47 } [PH] error: 🐱‍🏍 globalErrorHandler ~~ Department doesn' exist!
+Tue Dec 10 2024 11:46:15 } [PH] error: 🐱‍🏍 globalErrorHandler ~~ This Department already has a manager
+Tue Dec 10 2024 11:56:0 } [PH] error: 🐱‍🏍 globalErrorHandler ~~ You only can edit name or end date
+Tue Dec 10 2024 11:56:11 } [PH] error: 🐱‍🏍 globalErrorHandler ~~ You only can edit status

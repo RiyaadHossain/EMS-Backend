@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-this-alias */
 import { model, Schema } from 'mongoose';
 import { IUser, UserModel } from './interface';
@@ -5,12 +6,14 @@ import { ENUM_USER_ROLE } from '@/enums/user';
 import bcrypt from 'bcrypt';
 import config from '@/config';
 import Employee from '../employee/model';
+import Manager from '../manager/model';
+import { ENUM_MANAGER_STATUS } from '@/enums/manager';
 
 const userSchema = new Schema<IUser>(
   {
     userId: { type: String, required: true, unique: true },
-    name: { type: String},
-    email: { type: String, required: true, unique: true  },
+    name: { type: String },
+    email: { type: String, required: true, unique: true },
     role: {
       type: String,
       enum: Object.values(ENUM_USER_ROLE),
@@ -56,11 +59,23 @@ userSchema.statics.isUserExist = async function (id: string) {
 userSchema.statics.getRoleSpecificDetails = async function (id: string) {
   const user = await User.findOne({ userId: id });
 
-  let details: any = {};
-  if (user?.role == ENUM_USER_ROLE.EMPLOYEE)
-    details = await Employee.findOne({ user: user._id });
+  const details: any = {};
+  if (user?.role != ENUM_USER_ROLE.ADMIN) {
+    const employee = await Employee.findOne({ user: user?._id });
+    details['employee'] = employee;
+
+    if (user?.role == ENUM_USER_ROLE.MANAGER) {
+      const manager = await Manager.findOne({
+        employee: employee?._id,
+        status: ENUM_MANAGER_STATUS.ACTIVE,
+      });
+      details['manager'] = manager
+    }
+
+  }
+
   //@ts-ignore
-  return { ...user._doc, ...details._doc };
+  return { ...user._doc, ...details };
 };
 
 const User = model<IUser, UserModel>('User', userSchema);

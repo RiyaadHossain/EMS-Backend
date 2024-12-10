@@ -74,6 +74,21 @@
             "date": 1733799710634,
             "name": "/home/riyad/Documents/Projects/Employee Management System/Backend/logs/winston/successes/phu-2024-10-12-09-success.log",
             "hash": "bc01183c758735745b80436b7f9c0ec3ae8e9dfa8172f805420ca113c82f196b"
+        },
+        {
+            "date": 1733805258155,
+            "name": "/home/riyad/Documents/Projects/Employee Management System/Backend/logs/winston/successes/phu-2024-10-12-10-success.log",
+            "hash": "bfe0e662dfc1f9311d500f0495025cd327218014b3b172a857216af31f9f66be"
+        },
+        {
+            "date": 1733808547670,
+            "name": "/home/riyad/Documents/Projects/Employee Management System/Backend/logs/winston/successes/phu-2024-10-12-11-success.log",
+            "hash": "e110c7c79abb10814687b7da9a05beca0030eca730d8fefd673209b37e529163"
+        },
+        {
+            "date": 1733811147469,
+            "name": "/home/riyad/Documents/Projects/Employee Management System/Backend/logs/winston/successes/phu-2024-10-12-12-success.log",
+            "hash": "0a3f90fadda38cfdb95cbac70cde8cebe506146b0791057425e19223f02a8be0"
         }
     ],
     "hashType": "sha256"

@@ -4,6 +4,7 @@ import { ENUM_MANAGER_STATUS } from '@/enums/manager';
 import { Model, Types } from 'mongoose';
 
 export type IManager = {
+  _id?: Types.ObjectId
   employee: Types.ObjectId;
   status: ENUM_MANAGER_STATUS;
 };

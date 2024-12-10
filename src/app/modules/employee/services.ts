@@ -83,7 +83,9 @@ const get = async (payload: JwtPayload) => {
   if (role == ENUM_USER_ROLE.MANAGER)
     query['department'] = (
       await User.getRoleSpecificDetails(userId)
-    )?.department;
+    )?.employee?.department;
+  
+  console.log(query);
 
   const employees = Employee.find(query).populate('department user');
   return employees;

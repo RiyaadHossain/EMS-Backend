@@ -1,0 +1,24 @@
+Tue Dec 10 2024 12:19:42 } [PH] error: 🐱‍🏍 globalErrorHandler ~~ [
+  {
+    "code": "invalid_type",
+    "expected": "string",
+    "received": "undefined",
+    "path": [
+      "body",
+      "assignTo"
+    ],
+    "message": "Assignee is required"
+  }
+]
+Tue Dec 10 2024 12:19:57 } [PH] error: 🐱‍🏍 globalErrorHandler ~~ Employee account doesn't not exist!
+Tue Dec 10 2024 12:38:53 } [PH] error: 🐱‍🏍 globalErrorHandler ~~ You're not authorized to update this project
+Tue Dec 10 2024 12:45:45 } [PH] error: 🐱‍🏍 globalErrorHandler ~~ You only can edit status
+Tue Dec 10 2024 12:46:48 } [PH] error: 🐱‍🏍 globalErrorHandler ~~ You only can edit status
+Tue Dec 10 2024 12:46:54 } [PH] error: 🐱‍🏍 globalErrorHandler ~~ You only can edit status
+Tue Dec 10 2024 12:47:16 } [PH] error: 🐱‍🏍 globalErrorHandler ~~ You only can edit status
+Tue Dec 10 2024 12:47:22 } [PH] error: 🐱‍🏍 globalErrorHandler ~~ You only can edit status
+Tue Dec 10 2024 12:47:31 } [PH] error: 🐱‍🏍 globalErrorHandler ~~ Cannot populate path `projct` because it is not in your schema. Set the `strictPopulate` option to false to override.
+Tue Dec 10 2024 12:50:8 } [PH] error: 🐱‍🏍 globalErrorHandler ~~ Unexpected token } in JSON at position 34
+Tue Dec 10 2024 12:50:11 } [PH] error: 🐱‍🏍 globalErrorHandler ~~ You only can edit status!
+Tue Dec 10 2024 12:52:48 } [PH] error: 🐱‍🏍 globalErrorHandler ~~ Forbidden
+Tue Dec 10 2024 12:53:5 } [PH] error: 🐱‍🏍 globalErrorHandler ~~ Forbidden

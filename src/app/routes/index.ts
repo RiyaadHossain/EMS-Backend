@@ -4,6 +4,8 @@ import { UserRoutes } from '../modules/user/routes';
 import { DepartmentRoutes } from '../modules/department/routes';
 import { EmployeeRoutes } from '../modules/employee/routes';
 import { ManagerRoutes } from '../modules/manager/routes';
+import { ProjectRoutes } from '../modules/project/routes';
+import { TaskRoutes } from '../modules/task/routes';
 
 const router = express.Router();
 
@@ -27,6 +29,14 @@ const moduleRoutes = [
   {
     path: "/manager",
     routes: ManagerRoutes
+  },
+  {
+    path: "/project",
+    routes: ProjectRoutes
+  },
+  {
+    path: "/task",
+    routes: TaskRoutes
   },
 ];
 
