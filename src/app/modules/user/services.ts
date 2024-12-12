@@ -38,8 +38,6 @@ const register = async (payload: ICompany) => {
     role: ENUM_USER_ROLE.ADMIN,
   };
 
-  console.log(userId, password);
-
   const user = await User.create(userPaylod);
   if (!user)
     throw new ApiError(httpStatus.BAD_REQUEST, 'Failed to create user account');

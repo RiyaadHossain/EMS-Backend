@@ -12,6 +12,14 @@ router.get(
   ProjectControllers.get
 );
 
+
+router.get(
+  '/:id',
+  auth(ENUM_USER_ROLE.ADMIN, ENUM_USER_ROLE.MANAGER, ENUM_USER_ROLE.EMPLOYEE),
+  ProjectControllers.getDetails
+);
+
+
 router.get(
   '/get-select-options',
   auth(ENUM_USER_ROLE.MANAGER),

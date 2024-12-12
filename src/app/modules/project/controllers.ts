@@ -17,6 +17,20 @@ const get: RequestHandler = catchAsync(async (req, res) => {
   });
 });
 
+
+const getDetails: RequestHandler = catchAsync(async (req, res) => {
+  const id = req.params.id
+  const result = await ProjectServices.getDetails(id);
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Project Details Information retvied succesfully',
+    data: result,
+  });
+});
+
+
 const getSelectOptions: RequestHandler = catchAsync(async (req, res) => {
   const user = req.user as JwtPayload;
   const result = await ProjectServices.getSelectOptions(user);
@@ -31,7 +45,8 @@ const getSelectOptions: RequestHandler = catchAsync(async (req, res) => {
 
 const add: RequestHandler = catchAsync(async (req, res) => {
   const projectData = req.body;
-  const result = await ProjectServices.add(projectData);
+  const userId = req.user?.userId
+  const result = await ProjectServices.add(userId, projectData);
 
   sendResponse(res, {
     statusCode: httpStatus.OK,
@@ -43,10 +58,10 @@ const add: RequestHandler = catchAsync(async (req, res) => {
 
 const update: RequestHandler = catchAsync(async (req, res) => {
   //@ts-ignore
-  const role = req.user.role
+  const user = req.user as JwtPayload
   const id = req.params.id;
   const projectData = req.body;
-  const result = await ProjectServices.update(role, id, projectData);
+  const result = await ProjectServices.update(user, id, projectData);
 
   sendResponse(res, {
     statusCode: httpStatus.OK,
@@ -70,6 +85,7 @@ const remove: RequestHandler = catchAsync(async (req, res) => {
 
 export const ProjectControllers = {
   get,
+  getDetails,
   add,
   update,
   remove,

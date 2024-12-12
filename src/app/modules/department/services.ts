@@ -8,6 +8,7 @@ import Department from './model';
 import { ENUM_DESIGNATION } from '@/enums/designation';
 import User from '../user/model';
 import { ENUM_USER_ROLE } from '@/enums/user';
+import Project from '../project/model';
 
 const get = async () => {
   const departments = await Department.find().populate({
@@ -31,6 +32,24 @@ const get = async () => {
   );
 
   return populatedDepartments;
+};
+
+const getDetails = async (id:string) => {
+  const department:any = await Department.findById(id).populate({
+    path: 'manager',
+    populate: {
+      path: 'employee',
+      populate: 'user',
+    },
+  }).lean();
+
+  if (!department)
+    throw new ApiError(httpStatus.BAD_REQUEST, "No Department found!")
+
+  department['projects'] = await Project.find({department: department._id})
+  department['totalEmployee'] = await Employee.find({department: department._id}).countDocuments()
+
+  return department;
 };
 
 const getSelectOptions = async () => {
@@ -63,7 +82,10 @@ const update = async (
     if (!employeeData)
       throw new ApiError(httpStatus.BAD_REQUEST, "The employee doesn't exist!");
 
-    if (await Manager.isManagerExist(employee))
+    const manager = await Manager.findOne({ employee, status: ENUM_MANAGER_STATUS.ACTIVE })
+    console.log(employee);
+    console.log(manager);
+    if (manager)
       throw new ApiError(
         httpStatus.BAD_REQUEST,
         'The employee already is a manager!'
@@ -128,6 +150,7 @@ const remove = async (id: string) => {
 
 export const DepartmentServices = {
   get,
+  getDetails,
   getSelectOptions,
   add,
   update,

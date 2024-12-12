@@ -6,8 +6,9 @@ import httpStatus from 'http-status';
 import { EmployeeServices } from './services';
 
 const add: RequestHandler = catchAsync(async (req, res) => {
+  const userId = req.user?.userId;
   const employeeData = req.body;
-  const result = await EmployeeServices.add(employeeData);
+  const result = await EmployeeServices.add(userId, employeeData);
 
   sendResponse(res, {
     statusCode: httpStatus.OK,
@@ -16,6 +17,19 @@ const add: RequestHandler = catchAsync(async (req, res) => {
     data: result,
   });
 });
+
+const getDetails: RequestHandler = catchAsync(async (req, res) => {
+  const id = req.params.id
+  const result = await EmployeeServices.getDetails(id);
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Employee Details Information retvied succesfully',
+    data: result,
+  });
+});
+
 
 const get: RequestHandler = catchAsync(async (req, res) => {
   //@ts-ignore
@@ -30,7 +44,7 @@ const get: RequestHandler = catchAsync(async (req, res) => {
 });
 
 const getSelectOptions: RequestHandler = catchAsync(async (req, res) => {
-  const {department} = req.params
+  const { department } = req.params;
   const result = await EmployeeServices.getSelectOptions(department);
 
   sendResponse(res, {
@@ -42,9 +56,10 @@ const getSelectOptions: RequestHandler = catchAsync(async (req, res) => {
 });
 
 const update: RequestHandler = catchAsync(async (req, res) => {
-  const { id } = req.params
-  const empData = req.body
-  const result = await EmployeeServices.update(id, empData);
+  const { id } = req.params;
+  const empData = req.body;
+  const userId = req?.user?.userId;
+  const result = await EmployeeServices.update(userId, id, empData);
 
   sendResponse(res, {
     statusCode: httpStatus.OK,
@@ -58,5 +73,6 @@ export const EmployeeControllers = {
   add,
   update,
   get,
+  getDetails,
   getSelectOptions,
 };

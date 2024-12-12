@@ -12,6 +12,12 @@ router.get(
   EmployeeControllers.get
 );
 
+router.get(
+  '/:id',
+  auth(ENUM_USER_ROLE.ADMIN),
+  EmployeeControllers.getDetails
+);
+
 
 router.get(
   '/get-select-options/:department',

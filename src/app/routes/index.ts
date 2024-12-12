@@ -6,6 +6,9 @@ import { EmployeeRoutes } from '../modules/employee/routes';
 import { ManagerRoutes } from '../modules/manager/routes';
 import { ProjectRoutes } from '../modules/project/routes';
 import { TaskRoutes } from '../modules/task/routes';
+import { NotificationRoutes } from '../modules/notification/routes';
+import { AnnouncementRoutes } from '../modules/announcement/routes';
+import { AttendanceRoutes } from '../modules/attendance/routes';
 
 const router = express.Router();
 
@@ -37,6 +40,18 @@ const moduleRoutes = [
   {
     path: "/task",
     routes: TaskRoutes
+  },
+  {
+    path: "/announcement",
+    routes: AnnouncementRoutes
+  },
+  {
+    path: "/notification",
+    routes: NotificationRoutes
+  },
+  {
+    path: "/attendance",
+    routes: AttendanceRoutes
   },
 ];
 

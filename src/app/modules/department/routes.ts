@@ -13,6 +13,12 @@ router.get(
 );
 
 router.get(
+  '/:id',
+  auth(ENUM_USER_ROLE.ADMIN),
+  DepartmentControllers.getDetails
+);
+
+router.get(
   '/get-select-options',
   auth(ENUM_USER_ROLE.ADMIN),
   DepartmentControllers.getSelectOptions

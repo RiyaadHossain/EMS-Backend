@@ -12,8 +12,13 @@ import { ENUM_DESIGNATION } from '@/enums/designation';
 import Department from '../department/model';
 import Manager from '../manager/model';
 import { ENUM_MANAGER_STATUS } from '@/enums/manager';
+import { NotificationServices } from '../notification/services';
+import Project from '../project/model';
 
-const add = async (payload: IUser & IEmployee) => {
+const add = async (adminId: string, payload: IUser & IEmployee) => {
+  const admin = await User.findOne({ userId: adminId })
+  if(!admin) throw new ApiError(httpStatus.BAD_REQUEST, "Admin account not found")
+
   const { designation, department } = payload;
   const isExist = await Employee.isEmployeeExist(payload.email);
   if (isExist)
@@ -72,6 +77,8 @@ const add = async (payload: IUser & IEmployee) => {
     await dept.save();
   }
 
+  await NotificationServices.add({from: admin._id,to: user._id, text: "Welcome, You're onboarded."})
+
   // Send Confirmation Email to User
   await EmployeeUtils.onboardEmloyeeEmail({ email, userId, password });
 };
@@ -91,6 +98,17 @@ const get = async (payload: JwtPayload) => {
   return employees;
 };
 
+
+const getDetails = async (id:string) => {
+  const employee: any = await Employee.findById(id).populate('user').lean();
+  if (!employee)
+    throw new ApiError(httpStatus.BAD_REQUEST, "No employee account found")
+
+  employee['projects'] = await Project.find({department: employee.department})
+
+  return employee;
+};
+
 const getSelectOptions = async (department: string) => {
   const selectOptins: any = [];
   const employees = await Employee.find({ department }).populate('user');
@@ -102,10 +120,13 @@ const getSelectOptions = async (department: string) => {
   return selectOptins;
 };
 
-const update = async (id: string, empData: IEmployee) => {
+const update = async (userId: string, id: string, empData: IEmployee) => {
+  const admin = await User.findOne({ userId })
+  if(!admin) throw new ApiError(httpStatus.BAD_REQUEST, "Admin account not found")
+
   const emp = await Employee.findById(id);
   if (!emp)
-    throw new ApiError(httpStatus.BAD_REQUEST, "Employee doesn' exist!");
+    throw new ApiError(httpStatus.BAD_REQUEST, "Employee doesn't exist!");
 
   let dept = null;
   if (empData?.department) {
@@ -113,6 +134,10 @@ const update = async (id: string, empData: IEmployee) => {
     if (!dept)
       throw new ApiError(httpStatus.BAD_REQUEST, "Department doesn't exist!");
   }
+
+  const user = await User.findById(emp.user)
+  if (!user)
+    throw new ApiError(httpStatus.BAD_REQUEST, "User doesn't exist!");
 
   if (empData?.designation === ENUM_DESIGNATION.MANAGER) {
     if (!dept && !emp.department) throw new ApiError(httpStatus.BAD_REQUEST, "Please Select a Department!");
@@ -137,8 +162,20 @@ const update = async (id: string, empData: IEmployee) => {
     dept.manager = manager._id
     await dept.save()
 
-    await User.findByIdAndUpdate(emp.user, { role: ENUM_USER_ROLE.MANAGER });
+    user.role = ENUM_USER_ROLE.MANAGER 
+    await user.save()
   }
+
+  if (empData?.designation != ENUM_DESIGNATION.MANAGER) {
+    emp.designation = empData.designation
+    user.role = ENUM_USER_ROLE.EMPLOYEE
+    await emp.save()
+    await user.save()
+    await Department.findByIdAndUpdate(emp.department, {manager: null})
+    await Manager.updateMany({employee: emp._id}, {status: ENUM_MANAGER_STATUS.IN_ACTIVE})
+  }
+
+  await NotificationServices.add({from: admin._id, to: user._id, text: `Again log in! Admin has changed your information.`})
 
   return await Employee.findByIdAndUpdate(id, empData, { new: true });
 };
@@ -147,5 +184,6 @@ export const EmployeeServices = {
   add,
   getSelectOptions,
   get,
+  getDetails,
   update,
 };

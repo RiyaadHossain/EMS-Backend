@@ -16,6 +16,18 @@ const get: RequestHandler = catchAsync(async (req, res) => {
   });
 });
 
+const getDetails: RequestHandler = catchAsync(async (req, res) => {
+  const id = req.params.id
+  const result = await DepartmentServices.getDetails(id);
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Department Details Information retvied succesfully',
+    data: result,
+  });
+});
+
 const getSelectOptions: RequestHandler = catchAsync(async (req, res) => {
   const result = await DepartmentServices.getSelectOptions();
 
@@ -66,6 +78,6 @@ const remove: RequestHandler = catchAsync(async (req, res) => {
 
 
 export const DepartmentControllers = {
-  get,getSelectOptions,
+  get,getDetails, getSelectOptions,
   add,update, remove
 };

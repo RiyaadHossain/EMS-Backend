@@ -8,6 +8,8 @@ import User from '../user/model';
 import Employee from '../employee/model';
 import { ENUM_USER_ROLE } from '@/enums/user';
 import hasOtherFields from '@/utils/object';
+import { NotificationServices } from '../notification/services';
+import { Types } from 'mongoose';
 
 const get = async (user: JwtPayload) => {
   const { userId } = user;
@@ -44,27 +46,67 @@ const add = async (userId: string, taskData: ITask) => {
       "Employee account doesn't not exist!"
     );
 
-  // const user = await User.getRoleSpecificDetails(userId)
+  const user = await User.getRoleSpecificDetails(userId);
+  if (!user)
+    throw new ApiError(
+      httpStatus.BAD_REQUEST,
+      'Manager user account not found!'
+    );
+
+  // ToDo: Only Particular project manager can assign task
   // if (user?.manager._id != project.manager)
   //   throw new ApiError(httpStatus.BAD_REQUEST, "You're not authorized to update this project")
+
+  await NotificationServices.add({
+    from: user._id,
+    to: employee.user,
+    text: "You're assigned a Task.",
+  });
 
   const task = await Task.create(taskData);
   return task;
 };
 
 const update = async (user: JwtPayload, id: string, taskData: ITask) => {
-  const task = await Task.findById(id).populate('project');
+  const task = await Task.findById(id).populate([
+    {
+      path: 'project',
+      populate: {
+        path: 'manager',
+        populate: {
+          path: 'employee',
+          populate: {
+            path: 'user',
+          },
+        },
+      },
+    },
+    {
+      path: 'assignedTo',
+      populate: {
+        path: 'user',
+      },
+    },
+  ]);
   if (!task) throw new ApiError(httpStatus.BAD_REQUEST, 'Task is not exist!');
 
-  // const userData = await User.getRoleSpecificDetails(user.userId)
-  // //@ts-ignore
-  // if (userData?.manager._id != task.project.manager)
-  //   throw new ApiError(httpStatus.BAD_REQUEST, "You're not authorized to update this task")
-  
-  // if(user.role == ENUM_USER_ROLE.EMPLOYEE && task.assignedTo != userData.employee._id)
-    //   throw new ApiError(httpStatus.BAD_REQUEST, "You're not authorized to update this task")
+  const userData = await User.getRoleSpecificDetails(user.userId);
+  if (!userData)
+    throw new ApiError(httpStatus.BAD_REQUEST, 'User account not found!');
 
-  if (user.role === ENUM_USER_ROLE.MANAGER && hasOtherFields(taskData, ['name', 'assignedTo'])) {
+  /*   
+  ToDo: Only assigned manager and employee can update task 
+  if (userData?.manager._id != task.project.manager)
+    throw new ApiError(httpStatus.BAD_REQUEST, "You're not authorized to update this task")
+  
+  if(user.role == ENUM_USER_ROLE.EMPLOYEE && task.assignedTo != userData.employee._id)
+      throw new ApiError(httpStatus.BAD_REQUEST, "You're not authorized to update this task") 
+  */
+
+  if (
+    user.role === ENUM_USER_ROLE.MANAGER &&
+    hasOtherFields(taskData, ['name', 'assignedTo'])
+  ) {
     throw new ApiError(
       httpStatus.BAD_REQUEST,
       'You only can edit name or assignedTo!'
@@ -77,7 +119,34 @@ const update = async (user: JwtPayload, id: string, taskData: ITask) => {
   )
     throw new ApiError(httpStatus.BAD_REQUEST, 'You only can edit status!');
 
+  if (user.role === ENUM_USER_ROLE.EMPLOYEE)
+    return updateStatus(userData._id, task, taskData.status);
+
+  await NotificationServices.add({
+    from: userData._id,
+    //@ts-ignore
+    to: task.assignedTo.user._id,
+    text: `Task ${task.name} is updated`,
+  });
+
   return await Task.findByIdAndUpdate(id, taskData, { new: true });
+};
+
+const updateStatus = async (
+  employeeUserId: Types.ObjectId,
+  task: ITask,
+  status: string
+) => {
+  //@ts-ignore
+  const managerUserId = task.project.manger.employee.usre._id;
+  await NotificationServices.add({
+    from: employeeUserId,
+    to: managerUserId,
+    text: `${task.name} status has been updated`,
+  });
+
+  //@ts-ignore
+  await Task.findByIdAndUpdate(task._id, { status }, { new: true });
 };
 
 const remove = async (id: string) => {

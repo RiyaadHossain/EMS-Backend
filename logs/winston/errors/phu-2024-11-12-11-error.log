@@ -1,0 +1,2 @@
+Wed Dec 11 2024 11:49:29 } [PH] error: 🐱‍🏍 globalErrorHandler ~~ Employee validation failed: designation: `Managerr` is not a valid enum value for path `designation`.
+Wed Dec 11 2024 11:49:34 } [PH] error: 🐱‍🏍 globalErrorHandler ~~ Employee with the same email already exist!

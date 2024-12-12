@@ -1,0 +1,10 @@
+Wed Dec 11 2024 14:43:1 } [PH] error: 🐱‍🏍 globalErrorHandler ~~ The employee already is a manager!
+Wed Dec 11 2024 14:44:32 } [PH] error: 🐱‍🏍 globalErrorHandler ~~ The employee already is a manager!
+Wed Dec 11 2024 14:44:58 } [PH] error: 🐱‍🏍 globalErrorHandler ~~ The employee already is a manager!
+Wed Dec 11 2024 14:53:26 } [PH] error: 🐱‍🏍 globalErrorHandler ~~ Manager is not assigned to IT department!
+Wed Dec 11 2024 14:53:33 } [PH] error: 🐱‍🏍 globalErrorHandler ~~ The employee already is a manager!
+Wed Dec 11 2024 14:53:49 } [PH] error: 🐱‍🏍 globalErrorHandler ~~ The employee already is a manager!
+Wed Dec 11 2024 14:56:22 } [PH] error: 🐱‍🏍 globalErrorHandler ~~ Manager is not assigned to IT department!
+Wed Dec 11 2024 14:57:51 } [PH] error: 🐱‍🏍 globalErrorHandler ~~ You only can edit status
+Wed Dec 11 2024 14:58:2 } [PH] error: Notification validation failed: from: Path `from` is required.
+Wed Dec 11 2024 14:59:30 } [PH] error: Cannot read properties of undefined (reading '_id')

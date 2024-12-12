@@ -4,10 +4,9 @@ import mongoose from 'mongoose';
 import app from './app';
 import config from './config';
 import { errorlogger } from './shared/logger';
-
+import initiailzeAttdSheet from './helpers/corn';
 
 async function bootstrap() {
-
   const server: Server = app.listen(config.PORT, () => {
     console.log(`Server running on port ${config.PORT}`);
   });
@@ -17,8 +16,10 @@ async function bootstrap() {
     .then(() => console.log('Database connected successfully'))
     .catch(err => console.log('Database connection error ', err));
 
-  const exitHandler = () => {
+  // Corn Job
+  await initiailzeAttdSheet();
 
+  const exitHandler = () => {
     if (server) {
       server.close(() => {
         console.log('Server closed');
