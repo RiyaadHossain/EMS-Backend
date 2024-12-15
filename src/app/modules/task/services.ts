@@ -17,7 +17,16 @@ const get = async (user: JwtPayload) => {
   if (!userDetails)
     throw new ApiError(httpStatus.BAD_REQUEST, 'User data not found!');
 
-  const tasks = await Task.find({ assignedTo: userDetails?.employee._id });
+  let tasks:any = await Task.find({ assignedTo: userDetails?.employee._id }).populate('project');
+  tasks = tasks.map((task: any) => ({
+    id: task._id,
+    name: task.name,
+    project: task.project,
+    projectId: task.project._id,
+    projectName: task.project.name,
+    status: task.status
+  }))
+
   return tasks;
 };
 
@@ -26,10 +35,18 @@ const getByProject = async (projectId: string) => {
   if (!project)
     throw new ApiError(httpStatus.BAD_REQUEST, 'Project is not exist!');
 
-  const tasks = await Task.find({ project: project._id }).populate({
+  let tasks: any = await Task.find({ project: project._id }).populate({
     path: 'assignedTo',
     populate: { path: 'user' },
   });
+
+  tasks = tasks.map((task: any) => ({
+    name: task.name,
+    user: task?.assignedTo?.user,
+    assignee: task?.assignedTo?.user?.name,
+    status: task?.status,
+  }));
+
   return tasks;
 };
 
@@ -88,6 +105,7 @@ const update = async (user: JwtPayload, id: string, taskData: ITask) => {
       },
     },
   ]);
+
   if (!task) throw new ApiError(httpStatus.BAD_REQUEST, 'Task is not exist!');
 
   const userData = await User.getRoleSpecificDetails(user.userId);
@@ -138,11 +156,11 @@ const updateStatus = async (
   status: string
 ) => {
   //@ts-ignore
-  const managerUserId = task.project.manger.employee.usre._id;
+  const managerUserId = task?.project?.manager?.employee?.user?._id;
   await NotificationServices.add({
     from: employeeUserId,
     to: managerUserId,
-    text: `${task.name} status has been updated`,
+    text: `Task:${task.name} status has been updated`,
   });
 
   //@ts-ignore

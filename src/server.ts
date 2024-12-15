@@ -3,7 +3,6 @@ import { Server } from 'http';
 import mongoose from 'mongoose';
 import app from './app';
 import config from './config';
-import { errorlogger } from './shared/logger';
 import initiailzeAttdSheet from './helpers/corn';
 
 async function bootstrap() {
@@ -29,7 +28,7 @@ async function bootstrap() {
   };
 
   const unexpectedErrorHandler = (error: unknown) => {
-    errorlogger.error(error);
+    console.log (error);
     exitHandler();
   };
 

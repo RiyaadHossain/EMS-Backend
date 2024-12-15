@@ -3,7 +3,7 @@ import ApiError from '@/errors/ApiError';
 import httpStatus from 'http-status';
 import Employee from '../employee/model';
 import Manager from '../manager/model';
-import { IDepartment, IDepartmentPayload, IDepartmentRes } from './interface';
+import { IDepartment, IDepartmentPayload } from './interface';
 import Department from './model';
 import { ENUM_DESIGNATION } from '@/enums/designation';
 import User from '../user/model';
@@ -19,19 +19,27 @@ const get = async () => {
     },
   });
 
-  const populatedDepartments = await Promise.all(
-    departments.map(async (dept: IDepartmentRes) => {
+  const populatedDepts:any = await Promise.all(
+    departments.map(async (dept: any) => {
       const totalEmployee = await Employee.find({
-        //@ts-ignore
-        demaptment: dept._id,
+        department: dept._id,
       }).countDocuments();
-
       //@ts-ignore
       return { ...dept._doc, totalEmployee };
     })
   );
 
-  return populatedDepartments;
+  const resData: any = [] 
+  populatedDepts.forEach((dept:any) => resData.push({
+    id: dept._id,
+    departmentName: dept.name,
+    manager: dept.manager?.employee?.user?.name || "No Manager",
+    managerId: dept.manager?._id || null,
+    employeeId: dept.manager?.employee?._id || null,
+    totalEmployee: dept.totalEmployee,
+  }))
+
+  return resData;
 };
 
 const getDetails = async (id:string) => {
@@ -48,7 +56,6 @@ const getDetails = async (id:string) => {
 
   department['projects'] = await Project.find({department: department._id})
   department['totalEmployee'] = await Employee.find({department: department._id}).countDocuments()
-
   return department;
 };
 
@@ -83,8 +90,6 @@ const update = async (
       throw new ApiError(httpStatus.BAD_REQUEST, "The employee doesn't exist!");
 
     const manager = await Manager.findOne({ employee, status: ENUM_MANAGER_STATUS.ACTIVE })
-    console.log(employee);
-    console.log(manager);
     if (manager)
       throw new ApiError(
         httpStatus.BAD_REQUEST,
@@ -140,7 +145,6 @@ const remove = async (id: string) => {
         designation: ENUM_DESIGNATION.MEMBER,
       });
 
-      console.log(result);
       return result;
     })
   );

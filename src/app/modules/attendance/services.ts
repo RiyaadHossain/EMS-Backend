@@ -4,6 +4,7 @@ import Attendance from './model';
 import User from '../user/model';
 import ApiError from '@/errors/ApiError';
 import httpStatus from 'http-status';
+import Employee from '../employee/model';
 
 const stats = async () => {
   const today = new Date();
@@ -12,27 +13,41 @@ const stats = async () => {
 
   // Get total days in the current month
   const totalDays = getTotalDaysInMonth(year, month);
-  const resData: any = { month, year };
+  const attData: any = { month, year };
   Array.from({ length: totalDays }, (_, index) => index + 1).forEach(day => {
-    resData[twoDigitDay(day)] = 0;
+    attData[twoDigitDay(day)] = 0;
   });
 
   const attendanceSheet = await Attendance.find({ month }).populate('user');
   attendanceSheet.forEach(attd => {
     Array.from({ length: totalDays }, (_, index) => index + 1).forEach(day => {
       //@ts-ignore
-      resData[twoDigitDay(day)] += attd[twoDigitDay(day)];
+      attData[twoDigitDay(day)] += attd[twoDigitDay(day)];
     });
   });
 
-  return resData;
+  const finalData:any = []
+  Object.keys(attData).forEach(key => {
+    if (key.includes('day'))
+      finalData.push({ day: key.slice(3), attend:  attData[key]  })
+  })
+
+  return finalData;
 };
 
-const employeeSheet = async () => {
+const employeeSheet = async (month:number) => {
   const today = new Date();
-  const month = today.getMonth();
-  const sheetData = await Attendance.find({ month }).populate('user')
-  return sheetData
+  if(!month) month = today.getMonth();
+  const sheetData: any = await Attendance.find({ month }).populate('user')
+  
+  const populatedData = await Promise.all(
+    sheetData.map(async (sheet:any) => {
+      const employee = await Employee.findOne({ user: sheet.user._id })
+      return {...sheet._doc, name: sheet?.user?.name, employeeId: employee?._id}
+    })
+  )
+
+  return populatedData
 };
 
 const mySheet = async (user: JwtPayload) => {
@@ -41,8 +56,10 @@ const mySheet = async (user: JwtPayload) => {
       throw new ApiError(httpStatus.BAD_REQUEST, "User not found!")
 
   const today = new Date();
-  const month = today.getMonth();
-  const sheetData = await Attendance.findOne({ month, user: myData._id })
+  const month = today.getMonth(),year = today.getFullYear();
+  let sheetData = await Attendance.findOne({ month, user: myData._id })
+  if(!sheetData) sheetData = await Attendance.create({year, month,user: myData._id})
+
   return sheetData
 };
 
@@ -54,6 +71,7 @@ const attdStatus = async (user: JwtPayload) => {
   const today = new Date();
   const date = today.getDate();
   const mysheetData = await mySheet(user)
+
   //@ts-ignore
   return {'status': mysheetData[twoDigitDay(date)]}
 };

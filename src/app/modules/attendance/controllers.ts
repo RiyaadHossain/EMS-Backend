@@ -19,7 +19,8 @@ const stats: RequestHandler = catchAsync(async (req, res) => {
 
 const employeeSheet: RequestHandler = catchAsync(async (req, res) => {
   // Filtering option for month, year
-  const result = await AttendanceServices.employeeSheet();
+  const month = Number(req.query.month)
+  const result = await AttendanceServices.employeeSheet(month);
 
   sendResponse(res, {
     statusCode: httpStatus.OK,

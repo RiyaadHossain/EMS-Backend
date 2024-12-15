@@ -11,4 +11,22 @@ router.get(
 );
 
 
+router.get(
+  '/get-select-options',
+  auth(ENUM_USER_ROLE.ADMIN),
+  ManagerControllers.getSelectOptions
+);
+
+router.get(
+  '/my-manager',
+  auth(ENUM_USER_ROLE.EMPLOYEE),
+  ManagerControllers.getMyManager
+);
+
+router.get(
+  '/:id',
+  auth(ENUM_USER_ROLE.ADMIN),
+  ManagerControllers.getDetails
+);
+
 export const ManagerRoutes = router;

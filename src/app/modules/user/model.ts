@@ -61,7 +61,7 @@ userSchema.statics.getRoleSpecificDetails = async function (id: string) {
 
   const details: any = {};
   if (user?.role != ENUM_USER_ROLE.ADMIN) {
-    const employee = await Employee.findOne({ user: user?._id });
+    const employee = await Employee.findOne({ user: user?._id }).populate('department');
     details['employee'] = employee;
 
     if (user?.role == ENUM_USER_ROLE.MANAGER) {

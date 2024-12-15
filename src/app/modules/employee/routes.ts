@@ -14,14 +14,14 @@ router.get(
 
 router.get(
   '/:id',
-  auth(ENUM_USER_ROLE.ADMIN),
+  auth(ENUM_USER_ROLE.ADMIN, ENUM_USER_ROLE.MANAGER),
   EmployeeControllers.getDetails
 );
 
 
 router.get(
   '/get-select-options/:department',
-  auth(ENUM_USER_ROLE.ADMIN),
+  auth(ENUM_USER_ROLE.ADMIN, ENUM_USER_ROLE.MANAGER),
   EmployeeControllers.getSelectOptions
 );
 

@@ -1,18 +1,19 @@
 {
-  "name": "university-management-core-service",
+  "name": "employee-management-system",
   "version": "1.0.0",
   "description": "",
   "main": "src/server.ts",
   "scripts": {
-    "start": "ts-node-dev --respawn --transpile-only src/server.ts",
+    "dev": "ts-node-dev --respawn --transpile-only -r tsconfig-paths/register src/server.ts",
+    "start": "ts-node -r tsconfig-paths/register dist/server.js",
+    "build": "tsc  && tsc-alias",
     "lint:check": "eslint --ignore-path .eslintignore --ext .js,.ts .",
     "lint:fix": "eslint . --fix",
     "prettier:check": "prettier --ignore-path .gitignore --write \"**/*.+(js|ts|json)\"",
     "prettier:fix": "prettier --write .",
-    "lint-prettier": "yarn lint:check && yarn prettier:check",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "lint-prettier": "yarn lint:check && yarn prettier:check"
   },
-  "author": "Programming Hero",
+  "author": "Riyad Hossain",
   "license": "ISC",
   "lint-staged": {
     "src/**/*.ts": "yarn lint-prettier"
@@ -47,9 +48,9 @@
     "mongoose": "^8.8.4",
     "node-cron": "^3.0.3",
     "nodemailer": "^6.9.16",
+    "tsc-alias": "^1.8.10",
     "tsconfig-paths": "^4.2.0",
     "winston": "^3.9.0",
-    "winston-daily-rotate-file": "^4.7.1",
     "zod": "^3.21.4"
   }
 }

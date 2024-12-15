@@ -9,6 +9,9 @@ import { TaskRoutes } from '../modules/task/routes';
 import { NotificationRoutes } from '../modules/notification/routes';
 import { AnnouncementRoutes } from '../modules/announcement/routes';
 import { AttendanceRoutes } from '../modules/attendance/routes';
+import { DashboardRoutes } from '../modules/dashboard/routes';
+import { ProfileRoutes } from '../modules/profile/routes';
+import { QueryRoutes } from '@/scripts/query';
 
 const router = express.Router();
 
@@ -53,6 +56,18 @@ const moduleRoutes = [
     path: "/attendance",
     routes: AttendanceRoutes
   },
+  {
+    path: "/dashboard",
+    routes: DashboardRoutes
+  },
+  {
+    path: "/profile",
+    routes: ProfileRoutes
+  },
+  {
+    path: "/script",
+    routes: QueryRoutes
+  }
 ];
 
 moduleRoutes.forEach(route => router.use(route.path, route.routes));

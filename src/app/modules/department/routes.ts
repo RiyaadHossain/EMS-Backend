@@ -12,11 +12,6 @@ router.get(
   DepartmentControllers.get
 );
 
-router.get(
-  '/:id',
-  auth(ENUM_USER_ROLE.ADMIN),
-  DepartmentControllers.getDetails
-);
 
 router.get(
   '/get-select-options',
@@ -42,6 +37,12 @@ router.delete(
   '/remove/:id',
   auth(ENUM_USER_ROLE.ADMIN),
   DepartmentControllers.remove
+);
+
+router.get(
+  '/:id',
+  auth(ENUM_USER_ROLE.ADMIN),
+  DepartmentControllers.getDetails
 );
 
 export const DepartmentRoutes = router;

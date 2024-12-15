@@ -13,34 +13,101 @@ import hasOtherFields from '@/utils/object';
 import Task from '../task/model';
 import Employee from '../employee/model';
 import { NotificationServices } from '../notification/services';
-import { Types } from 'mongoose';
+import { SortOrder, Types } from 'mongoose';
+import { IPagination } from '@/interfaces/pagination';
+import { IFilters } from '@/interfaces/common';
+import { paginationHelpers } from '@/helpers/paginationHelper';
+import { searchableFields } from './constants';
+import { calculateDateDifference, formatDate } from '@/utils/date';
 
-const get = async (user: JwtPayload) => {
+const get = async (user: JwtPayload,
+  pagination: IPagination,
+  filters: IFilters) => {
   const { userId, role } = user;
 
-  const query: any = {};
-  if (role == ENUM_USER_ROLE.MANAGER)
+  const andConditions = [];
+  if (role == ENUM_USER_ROLE.MANAGER){
+    const query: any = {};
     query['manager'] = (
       await User.getRoleSpecificDetails(userId)
     )?.manager?._id;
+    andConditions.push(query)
+}
+  
+    const { page, limit, skip, sortOrder, sortBy } =
+    paginationHelpers.calculatePagination(pagination);
 
-  const projects = await Project.find(query)
-    .populate('department')
-    .populate({
-      path: 'manager',
-      populate: {
-        path: 'employee',
+  if (role == ENUM_USER_ROLE.MANAGER) {
+    const query: any = {};
+    query['department'] = (
+      await User.getRoleSpecificDetails(userId)
+    )?.employee?.department;
+    andConditions.push(query);
+  }
+
+  // Sort condition
+  const sortCondition: { [key: string]: SortOrder } = {};
+  sortCondition[sortBy] = sortOrder;
+
+  // Filter Options
+  const { searchTerm, ...filtersData } = filters;
+
+  if (searchTerm) {
+    andConditions.push({
+      $or: searchableFields.map(field => ({
+        [field]: { '$regex': searchTerm, '$options': 'i' },
+      })),
+    });
+  }
+
+  if (Object.keys(filtersData).length) {
+    andConditions.push({
+      $and: Object.entries(filtersData).map(([field, value]) => ({
+        [field]:  value,
+      })),
+    });
+  }
+
+  const whereCondition = andConditions.length ? { $and: andConditions } : {};
+
+  let projects:any = await Project.find(whereCondition)
+    .sort(sortCondition)
+    .skip(skip)
+    .limit(limit)
+    .populate([
+      {
+        path: 'department',
         populate: {
-          path: 'user',
+          path: 'manager',
+          populate: { path: 'employee', populate: 'user' },
         },
       },
-    });
+    ])
+    .lean();
 
-  return projects;
+  projects = projects.map((project:any) => ({
+      id: project._id,
+      projectName: project.name,
+      department: project?.department?.name,
+      manager: project?.department?.manager?.employee?.user?.name,
+      managerId: project?.department?.manager?._id,
+      employeeId: project?.department?.manager?.employee?._id,
+      issueDate: formatDate(project?.issueDate),
+      expectedEndDate: formatDate(project?.expectedEndDate),
+      plainExpectedEndDate: project?.expectedEndDate,
+      status: project?.status,
+    }))
+
+  const total = await Project.countDocuments(whereCondition);
+  const totalPages = Math.ceil(total / limit);
+
+  const meta = { total, page, limit, totalPages };
+
+  return { meta, data: projects };
 };
 
 const getDetails = async (id: string) => {
-  const project = await Project.findById(id).populate({
+  const project:any = await Project.findById(id).populate([{
     path: 'manager',
     populate: {
       path: 'employee',
@@ -48,14 +115,26 @@ const getDetails = async (id: string) => {
         path: 'user',
       },
     },
-  }).lean();
+  }, {path: 'department'}]).lean();
+
   if (!project)
     throw new ApiError(httpStatus.BAD_REQUEST, 'No project account found');
 
-  //@ts-ignore
-  project['tasks'] = await Task.find({project: project._id}).populate({path: 'assignedTo', populate: { path: 'user' }})
+  const resData: any = {
+    name: project.name,
+  issueDate: formatDate(project.issueDate),
+  expectedEndDate: formatDate(project.expectedEndDate),
+  plainExpectedEndDate: project?.expectedEndDate,
+  department: project.department,
+  manager: project.manager.employee.user,
+  status: project.status,
+  duration: calculateDateDifference(project.issueDate, project.expectedEndDate),
+  }
 
-  return project;
+  //@ts-ignore
+  resData['tasks'] = await Task.find({project: project._id}).populate({path: 'assignedTo', populate: { path: 'user' }})
+
+  return resData;
 };
 
 const getSelectOptions = async (user: JwtPayload) => {
@@ -130,7 +209,7 @@ const update = async (user: JwtPayload, id: string, projectData: IProject) => {
   const isManager = role === ENUM_USER_ROLE.MANAGER;
   const isAdmin = role === ENUM_USER_ROLE.ADMIN;
 
-  if (isAdmin && hasOtherFields(projectData, ['name', 'exptectedEndDate']))
+  if (isAdmin && hasOtherFields(projectData, ['name', 'expectedEndDate']))
     throw new ApiError(
       httpStatus.BAD_REQUEST,
       'You only can edit name / end date'

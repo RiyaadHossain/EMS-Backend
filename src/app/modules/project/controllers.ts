@@ -4,10 +4,15 @@ import { RequestHandler } from 'express';
 import httpStatus from 'http-status';
 import { ProjectServices } from './services';
 import { JwtPayload } from 'jsonwebtoken';
+import pick from '@/shared/pick';
+import { paginationFields } from '@/constants/pagination';
+import { searchAndFilterAbleFields } from './constants';
 
 const get: RequestHandler = catchAsync(async (req, res) => {
   const user = req.user as JwtPayload;
-  const result = await ProjectServices.get(user);
+  const pagination = pick(req.query, paginationFields);
+  const filters = pick(req.query, searchAndFilterAbleFields);
+  const result = await ProjectServices.get(user, pagination, filters);
 
   sendResponse(res, {
     statusCode: httpStatus.OK,
@@ -78,7 +83,7 @@ const remove: RequestHandler = catchAsync(async (req, res) => {
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: 'Project Information retvied succesfully',
+    message: 'Project Information removed succesfully',
     data: result,
   });
 });

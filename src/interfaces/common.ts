@@ -14,3 +14,7 @@ export type IGenericErrorResponse = {
   message: string;
   errorMessages: IGenericErrorMessage[];
 };
+
+export type IFilters = { searchTerm?: string };
+
+export type ISearch = { searchTerm?: string };

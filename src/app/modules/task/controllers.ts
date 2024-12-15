@@ -45,7 +45,7 @@ const add: RequestHandler = catchAsync(async (req, res) => {
 const update: RequestHandler = catchAsync(async (req, res) => {
   const id = req.params.id;
   const taskData = req.body;
-  const user = req.user
+  const user = req.user as JwtPayload
   const result = await TaskServices.update(user, id, taskData);
 
   sendResponse(res, {

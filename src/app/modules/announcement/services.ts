@@ -11,6 +11,7 @@ import { IEmployee } from '../employee/interface';
 import { Types } from 'mongoose';
 import Department from '../department/model';
 import Manager from '../manager/model';
+import { timeAgo } from '@/utils/date';
 
 const get = async (user: JwtPayload) => {
   const { userId, role } = user;
@@ -19,7 +20,7 @@ const get = async (user: JwtPayload) => {
   if (!userDetails)
     throw new ApiError(httpStatus.BAD_REQUEST, 'Uesr account not found!');
 
-  let announcements: IAnnouncement[] = [];
+  let announcements: any[] = [];
   const announcers: Types.ObjectId[] = [];
 
   const admins = await User.find({ role: ENUM_USER_ROLE.ADMIN });
@@ -45,7 +46,13 @@ const get = async (user: JwtPayload) => {
     announcers.push(managerUserId);
   }
 
-  announcements = await Announcement.find({ announcedBy: { $in: announcers } });
+  announcements = await Announcement.find({ announcedBy: { $in: announcers } }).populate('announcedBy');
+  announcements = announcements.map((announcement:any) => ({
+    id: announcement._id,
+    username: announcement?.announcedBy?.name,
+    announcement: announcement.text,
+    time: timeAgo(announcement.createdAt),
+  }))
 
   return announcements;
 };

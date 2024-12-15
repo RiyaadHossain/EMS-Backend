@@ -4,6 +4,10 @@ import { RequestHandler } from 'express';
 import sendResponse from '@/shared/sendResponse';
 import httpStatus from 'http-status';
 import { EmployeeServices } from './services';
+import { JwtPayload } from 'jsonwebtoken';
+import pick from '@/shared/pick';
+import { searchAndFilterAbleFields } from './constants';
+import { paginationFields } from '@/constants/pagination';
 
 const add: RequestHandler = catchAsync(async (req, res) => {
   const userId = req.user?.userId;
@@ -32,8 +36,10 @@ const getDetails: RequestHandler = catchAsync(async (req, res) => {
 
 
 const get: RequestHandler = catchAsync(async (req, res) => {
-  //@ts-ignore
-  const result = await EmployeeServices.get(req.user);
+  const user = req.user as JwtPayload
+  const pagination = pick(req.query, paginationFields);
+  const filters = pick(req.query, searchAndFilterAbleFields);
+  const result = await EmployeeServices.get({user, pagination, filters});
 
   sendResponse(res, {
     statusCode: httpStatus.OK,
@@ -45,7 +51,8 @@ const get: RequestHandler = catchAsync(async (req, res) => {
 
 const getSelectOptions: RequestHandler = catchAsync(async (req, res) => {
   const { department } = req.params;
-  const result = await EmployeeServices.getSelectOptions(department);
+  const user = req.user as JwtPayload
+  const result = await EmployeeServices.getSelectOptions(user, department);
 
   sendResponse(res, {
     statusCode: httpStatus.OK,
