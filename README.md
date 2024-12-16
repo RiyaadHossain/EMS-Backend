@@ -1,69 +1,94 @@
-# University Management Core Service
-This guide will walk you through the process of setting up the University Management Core Service Starter project. By following these steps, you will clone the project, install dependencies, and configure Prisma for database management. Let's get started!
+![alt text](screenshots/EMS.png)  
+
+# Employee Management System (EMS)  
+
+**Employee Management System (EMS)** is a robust multi-role web application that streamlines employee and project management. It supports **Admin**, **Manager**, and **Employee** roles, each with tailored functionalities to ensure smooth operations within an organization.  
+
+## Purpose  
+This project was designed to showcase my ability to implement complex, real-world systems while adhering to **industry-standard practices**, including:  
+- **Organized folder structure** for scalability.  
+- **Modularized and reusable code** to reduce redundancy.  
+- **Clean and readable code** for maintainability and collaboration.  
+
+The EMS platform is ideal for companies looking to automate HR processes, simplify task management, and provide role-specific dashboards for insights and actions.  
 
 
-## Installation Steps
-### Follow these steps to clone and set up starter project:
+---
 
-1. `Clone the project:` Open your terminal or command prompt and run the following command to clone the project repository:
+## 🔗 Live Demo  
+Access the live application here: [EMS Live](https://ems.vercel.app/)  
 
-```bash
-git clone https://github.com/Programming-Hero-Next-Level-Development/university-management-core-service-starter.git university-management-core-service
-```
+## 📹 Project Demo Video  
+Watch the full walkthrough of EMS: [YouTube Demo](https://youtu.be/project_demo_link)  
 
-2. `Navigate into the project directory:` Use the cd command to navigate into the project directory:
+---
 
-```bash
-cd university-management-core-service
-```
+## 🌟 Features  
 
-3. `Install project dependencies:` Next, install the project dependencies by running the following command:
+### Authentication and Onboarding  
+- Secure login system for all roles (Admin, Manager, Employee).  
+- Automated onboarding process with email notifications, including an **auto-generated employee ID and password** for new employees.  
 
-```bash
-yarn install
-```
+### Role-Specific Functionalities  
 
-4. Configure Prisma and the database connection:
+#### Admin Role  
+- **Employee & Department Management**:  
+  - Onboard new employees.  
+  - Manage departments and create projects under them.  
+- **Attendance Monitoring**:  
+  - Visualize individual attendance records and monthly statistics.  
+- **Dashboard & Announcements**:  
+  - View system-wide analytics, active managers, and employees.  
+  - Post announcements to all employees.  
 
-- Add Prisma as a development dependency by running the following command:
-```bash
-yarn add prisma --save-dev
-```
+#### Manager Role  
+- **Project Oversight**:  
+  - View and manage projects within their department.  
+  - Assign tasks to employees under specific projects.  
+  - Update project statuses.  
+- **Employee Management**:  
+  - Access department employee details.  
+- **Dashboard**:  
+  - Visualize active projects, employee statistics, and personal attendance reports.  
 
-- Set up your Prisma project by creating the Prisma schema file using the following command:
-```bash
-npx prisma init
-```
+#### Employee Role  
+- **Task Management**:  
+  - View assigned tasks and update statuses.  
+- **Dashboard**:  
+  - Get an overview of tasks, manager details, and personal attendance records.  
 
-- Open the prisma/schema.prisma file and configure your database connection details.
+---
 
-```bash
-datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
-}
-```
+## 🛠️ Technologies Used  
 
-- Create a .env file in the project root directory and set the DATABASE_URL environment variable. Replace the placeholders with your database connection details:
-```bash
-DATABASE_URL="postgresql://USER:PASSWORD@HOST:PORT/DATABASE?schema=SCHEMA"
-```
+### Frontend  
+- **React.js** and **Next.js** for creating a responsive and scalable interface.  
+- **Ant Design** for sleek and professional UI components.  
+- **TanStack Query** for efficient state management and data fetching.  
 
-5. Creating the database schema
-6. Migrate the database schema: Use the following command to create and apply the initial database schema:
+### Backend  
+- **Node.js** and **Express.js** for a robust API architecture.  
+- **MongoDB** with **Mongoose** for a highly scalable database solution.  
 
-```bash
-npx prisma migrate dev --name init
-```
-This command creates a new migration file based on your schema changes and applies it to your database.
+### Hosting  
+- Fully deployed using **Vercel** for fast and reliable hosting.  
 
-6. `Install Prisma Client:` Install the Prisma Client library by running the following command:
-```bash
-yarn add @prisma/client
-```
+---
 
-This command installs the Prisma Client, which provides an interface to interact with your database.
+## 📂 Implementation Highlights  
+- **Organized Folder Structure**:  
+  - Separation of concerns for better scalability and maintainability.  
+- **Modularized Code**:  
+  - Reusable components and services to reduce redundancy.  
+- **Clean Coding Practices**:  
+  - Followed industry-standard best practices to ensure the codebase is easy to understand and collaborate on.  
+- **Comprehensive Role Management**:  
+  - Built custom functionalities for Admin, Manager, and Employee roles with a focus on scalability and efficiency.  
 
-That's it! You have successfully set up the University Management Core Service Starter project. You can now start exploring and working with the codebase. Refer to the project documentation or README for further instructions on how to run and use the core service.
 
-Happy coding!
+## 🚀 How to Get Started  
+
+### Installation  
+1. Clone this repository:  
+   ```bash  
+   git clone https://github.com/yourusername/employee-management-system  
