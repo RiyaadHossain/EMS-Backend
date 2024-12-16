@@ -16,10 +16,13 @@ The EMS platform is ideal for companies looking to automate HR processes, simpli
 ---
 
 ## 🔗 Live Demo  
-Access the live application here: [EMS Live](https://ems.vercel.app/)  
+Access the live application here: [EMS Live](https://ems-riyad.vercel.app/)  
 
 ## 📹 Project Demo Video  
 Watch the full walkthrough of EMS: [YouTube Demo](https://youtu.be/project_demo_link)  
+
+## 🔗 Frontend Code  
+Get the server code here: [EMS Live](https://github.com/RiyaadHossain/EMS-Frontend)  
 
 ---
 

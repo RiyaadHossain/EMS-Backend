@@ -8,9 +8,17 @@ import cookieParser from 'cookie-parser';
 import config from './config';
 
 const app: Application = express();
+// List of allowed origins
+const allowedOrigins = [config.CLIENT_URL, 'http://localhost:3001'];
 
 const corsOptions: CorsOptions = {
-  origin: config.CLIENT_URL,
+  origin: (origin, callback) => {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   credentials: true,
 };
 
